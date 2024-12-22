@@ -8,9 +8,16 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        playfair: ['"Playfair Display"', "serif"],
+        raleway: ['"Raleway"', "sans-serif"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+      },
+      scrollbar: {
+        hide: "scrollbar-hide",
       },
     },
   },

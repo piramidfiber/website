@@ -2,20 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Apply styles for screens with a minimum width of 768px */
+@media screen and (min-width: 768px) {
+  .scrollbar-custom {
+    /* Ensures scrollbar is shown but styled */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #158036 #e0e0e0; /* Green scrollbar on a light gray background */
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 8px; /* Adjust scrollbar width */
+    height: 8px; /* For horizontal scrollbar */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: #e0e0e0; /* Light gray background for the scrollbar track */
+    border-radius: 10px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: #158036; /* Green scrollbar thumb */
+    border-radius: 10px;
+    border: 2px solid #e0e0e0; /* Adds a border to separate the thumb from the track */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background-color: #13672e; /* Darker green on hover */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.second {
+  quotes: "“" "”";
+}
+
+.second::before {
+  content: open-quote;
+  font-size: 4em;
+  color: #ccc;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  font-family: Georgia, serif;
+}
+
+.second::after {
+  content: close-quote;
+  font-size: 4em;
+  color: #ccc;
+  position: absolute;
+  bottom: -42px;
+  right: 0;
+  font-family: Georgia, serif;
 }

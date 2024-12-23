@@ -1,11 +1,11 @@
 "use client";
 import { Footer, NavBar } from "@/components/layout";
 import { Mail, MapPin, PhoneCall } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const Page = () => {
   return (
-    <div className=" flex flex-col gap-4 w-full max-w-7xl mx-auto">
+    <div className=" flex flex-col px-4 py-4 gap-4 w-full max-w-7xl mx-auto">
       <NavBar />
       <ContactUs />
       <Footer />
@@ -14,9 +14,12 @@ const Page = () => {
 };
 
 function ContactUs() {
-  useEffect(() => {});
+  const [screenWidth, setScreenWidth] = useState(0);
+  useEffect(() => {
+    setScreenWidth(window.innerWidth);
+  });
   return (
-    <div className=" py-4 md:px-16 px-4 flex flex-col gap-8">
+    <div className=" py-4 md:px-16 flex flex-col gap-8">
       <p className=" text-4xl md:text-5xl font-medium font-playfair">
         Contact Us
       </p>
@@ -25,7 +28,7 @@ function ContactUs() {
           <div className=" flex flex-col items-center gap-4">
             <MapPin
               color="#158036"
-              size={window.innerWidth >= 640 ? 42 : 32}
+              size={screenWidth >= 640 ? 42 : 32}
               className="text-green-700"
             />
 
@@ -38,7 +41,7 @@ function ContactUs() {
           <div className=" flex flex-col items-center gap-4">
             <Mail
               color="#158036"
-              size={window.innerWidth >= 640 ? 42 : 32}
+              size={screenWidth >= 640 ? 42 : 32}
               className="text-green-700"
             />
 
@@ -50,7 +53,7 @@ function ContactUs() {
           <div className=" flex flex-col items-center gap-4">
             <PhoneCall
               color="#158036"
-              size={window.innerWidth >= 640 ? 42 : 32}
+              size={screenWidth >= 640 ? 42 : 32}
               className="text-green-700"
             />
 

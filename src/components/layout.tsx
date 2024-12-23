@@ -1,40 +1,138 @@
 "use client";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Menu, X } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/utils/cn";
 
-export function NavBar() {
-  const [showCategories, setShowCategories] = React.useState(false);
+export function NavBar({ routeURL }: { routeURL?: string }) {
+  const [showMobileNavbar, setShowMobileNavbar] = useState(false);
   return (
     <div className=" w-full ">
-      <div className=" relative  hidden md:flex px-16 py-4 gap-6 justify-between items-center">
+      <div className=" relative max-w-7xl w-full mx-auto hidden md:flex  py-4 gap-6 justify-between items-center">
         <Link href={"/"} className=" h-16 w-auto">
+          {routeURL === "/" ? (
+            <img
+              className=" object-contain w-full h-full overflow-hidden"
+              src="./filltex-logo.png"
+              alt="company_logo"
+            />
+          ) : (
+            <img
+              className=" object-contain overflow-hidden"
+              src="https://filltex.s3.ap-south-1.amazonaws.com/logo.png"
+              alt="company_logo"
+            />
+          )}
+        </Link>
+        <div
+          className={cn(
+            " flex gap-12 items-center justify-center",
+            routeURL === "/" && "text-white"
+          )}
+        >
+          <Link href={"/"} className=" font-medium text-lg  cursor-pointer">
+            Home
+          </Link>
+          <Link
+            href={"/category"}
+            className=" font-medium  gap-1 text-lg select-none cursor-pointer flex items-center justify-center"
+          >
+            Products
+          </Link>
+          <Link
+            href={"/contact-us"}
+            className=" font-medium  text-lg cursor-pointer"
+          >
+            Contact Us
+          </Link>
+        </div>
+        <Link
+          href={"/contact-us"}
+          className={cn(
+            " px-5 py-2 rounded-xl font-medium text-lg bg-white text-gray-800",
+            routeURL != "/" && " bg-green-600 text-white"
+          )}
+        >
+          Get a Quote
+        </Link>
+      </div>
+
+      <div className=" w-full flex md:hidden gap-6 justify-between items-center">
+        <Link href={"/"} className=" h-12 w-auto">
           <img
-            className=" object-contain overflow-hidden"
+            className=" object-contain h-full w-full overflow-hidden"
             src="https://filltex.s3.ap-south-1.amazonaws.com/logo.png"
             alt="company_logo"
           />
         </Link>
-        <div className=" flex gap-12 items-center justify-center">
-          <div className=" font-medium text-lg text-white cursor-pointer">
-            Home
-          </div>
-          <div
-            onClick={() => setShowCategories(!showCategories)}
-            className=" font-medium text-white gap-1 text-lg select-none cursor-pointer flex items-center justify-center"
+        <Menu onClick={() => setShowMobileNavbar(true)} color="white" />
+
+        {showMobileNavbar && (
+          <motion.div
+            initial={{
+              opacity: 0,
+              x: "100%",
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            className=" w-full px-4 py-4 h-full fixed flex flex-col z-50 inset-0 bg-black text-white  "
           >
-            Products
-          </div>
-          <div className=" font-medium text-white text-lg cursor-pointer">
-            Contact Us
-          </div>
-        </div>
-        <Link
-          href={"/contact-us"}
-          className=" px-5 py-2 rounded-xl font-medium text-lg bg-white text-gray-800"
-        >
-          Get a Quote
-        </Link>
+            <div className="w-full flex md:hidden gap-6 justify-between items-center">
+              <Link href={"/"} className=" h-12 w-auto">
+                <motion.img
+                  initial={{
+                    opacity: 0,
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                    ease: "easeInOut",
+                    delay: 0.4,
+                  }}
+                  className=" object-contain h-full w-full overflow-hidden"
+                  src="https://filltex.s3.ap-south-1.amazonaws.com/logo.png"
+                  alt="company_logo"
+                />
+              </Link>
+              <X onClick={() => setShowMobileNavbar(false)} color="white" />
+            </div>
+            <div className=" mt-24 flex flex-col items-center gap-2">
+              <Link
+                href={"/"}
+                className=" font-medium text-xl text-white cursor-pointer"
+              >
+                Home
+              </Link>
+              <Link
+                href={"/category"}
+                className="font-medium text-lg text-white cursor-pointer"
+              >
+                Products
+              </Link>
+              <Link
+                href={"/contact-us"}
+                className=" font-medium text-white text-lg cursor-pointer"
+              >
+                Contact Us
+              </Link>
+              <Link
+                href={"/contact-us"}
+                className=" px-5 py-2 rounded-xl font-medium text-lg bg-green-400 text-gray-800"
+              >
+                Get a Quote
+              </Link>
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
@@ -74,9 +172,14 @@ export function NavBar() {
 //   );
 // }
 
-export function Footer() {
+export function Footer({ className }: { className?: string }) {
   return (
-    <div className="px-4 border-t md:px-12 py-8 mt-4 flex gap-6 md:gap-2 flex-col">
+    <div
+      className={cn(
+        " border-t md:px-12 py-8 pb-4 mt-4 flex gap-6 md:gap-2 flex-col",
+        className
+      )}
+    >
       <div className="flex flex-col md:flex-row justify-between gap-10 md:gap-24 ">
         <div className="flex gap-8 w-full max-w-96 flex-col ">
           <Link href={"/"} className=" h-16 w-auto">
@@ -136,6 +239,31 @@ export function Footer() {
       <div className=" text-gray-600 font-thin text-base">
         All Rights Reserved, 2024
       </div>
+    </div>
+  );
+}
+
+export function AdminNavBar() {
+  return (
+    <div className=" w-full flex gap-4 items-center ">
+      <Link
+        href={"/admin"}
+        className=" border rounded py-1.5 px-3 text-gray-800 hover:bg-gray-100 duration-100 cursor-pointer"
+      >
+        Home
+      </Link>
+      <Link
+        href={"/admin/contact-us"}
+        className=" border rounded py-1.5 px-3 text-gray-800 hover:bg-gray-100 duration-100 cursor-pointer"
+      >
+        ContactUs
+      </Link>
+      <Link
+        href={"/admin/new-product"}
+        className=" border rounded py-1.5 px-3 bg-green-100 text-gray-800 hover:bg-green-200 duration-100 cursor-pointer"
+      >
+        Add new Product
+      </Link>
     </div>
   );
 }

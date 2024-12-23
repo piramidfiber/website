@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 const Page = () => {
   return (
-    <div className=" flex-col max-w-7xl flex w-full mx-auto  ">
+    <div className=" px-4 py-4 flex-col max-w-7xl flex w-full mx-auto  ">
       <NavBar />
       <ShowProduct key={0} productDetails={productDetails[0]} />
       <Footer />
@@ -63,7 +63,7 @@ function ShowProduct({ productDetails }: { productDetails: Product }) {
   return (
     <div className=" flex flex-col gap-4 w-full h-full">
       {/* <div className="">{`Home > Bed Protector and Mattress Covers > ${productDetails.name}`}</div> */}
-      <div className=" flex gap-1 flex-wrap items-center py-4 md:px-4 px-4">
+      <div className=" flex gap-1 flex-wrap items-center py-4 md:px-4">
         <p className=" cursor-pointer hover:underline text-gray-600 underline-offset-2">
           Home
         </p>
@@ -76,7 +76,7 @@ function ShowProduct({ productDetails }: { productDetails: Product }) {
           {productDetails.name}
         </p>
       </div>
-      <div className="py-4 md:px-4 px-4 flex flex-col md:flex-row gap-6 md:gap-10 h-full w-full">
+      <div className="py-4 md:px-4  flex flex-col md:flex-row gap-6 md:gap-10 h-full w-full">
         <div className="top-6 shrink-0 flex w-full flex-col-reverse h-fit gap-4 md:sticky md:w-auto md:flex-row">
           <div className="flex flex-row items-start h-full gap-4 md:gap-6 md:flex-col">
             {/* Thumbnails Section */}

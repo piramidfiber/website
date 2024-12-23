@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Page = () => {
   return (
-    <div className=" flex-col max-w-7xl w-full mx-auto  flex gap-8">
+    <div className=" px-4 py-4 flex-col max-w-7xl w-full mx-auto  flex gap-8">
       <NavBar />
       <CategoryBar categoryData={CATEGORY_DATA} />
       <CategoryCards categoryData={CATEGORY_DATA[0]} />
@@ -82,7 +82,7 @@ function CategoryBar({ categoryData }: { categoryData: CategoryDataTpye[] }) {
     return () => observer.disconnect();
   }, [categoryData]);
   return (
-    <div className="md:px-16 px-4 w-full sticky top-0 bg-white ">
+    <div className="md:px-16 w-full sticky top-0 bg-white ">
       <div className=" flex gap-8 overflow-x-scroll py-4 scrollbar-custom">
         <p className="font-thin text-gray-700 whitespace-nowrap">Jump to:</p>
         <div className="flex gap-10">
@@ -117,10 +117,7 @@ function CategoryCards({ categoryData }: { categoryData: CategoryDataTpye }) {
   ];
 
   return (
-    <div
-      id={categoryData.slug}
-      className=" flex flex-col py-4 md:px-16 px-4 gap-6"
-    >
+    <div id={categoryData.slug} className=" flex flex-col py-4 md:px-16 gap-6">
       <div className=" flex flex-col gap-4">
         <div className=" flex justify-between w-full items-center">
           <p className=" text-2xl md:text-4xl font-semibold font-playfair capitalize  ">

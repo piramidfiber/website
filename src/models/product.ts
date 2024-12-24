@@ -26,10 +26,10 @@ const productSchema = new mongoose.Schema(
     washCare: {
       type: String,
     },
-    // category: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Category",
-    // },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
     origin: {
       type: String,
     },

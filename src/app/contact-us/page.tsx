@@ -1,6 +1,6 @@
 "use client";
 import { Footer, NavBar } from "@/components/layout";
-import { Mail, MapPin, PhoneCall } from "lucide-react";
+import { LoaderCircle, Mail, MapPin, PhoneCall } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const Page = () => {
@@ -15,6 +15,35 @@ const Page = () => {
 
 function ContactUs() {
   const [screenWidth, setScreenWidth] = useState(0);
+  const [formSubmittionMsg, setFormSubmittionMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    number: "",
+    message: "",
+  });
+  async function handleFormSubmittion() {
+    setLoading(true);
+    const response = await fetch("/api/createContactInfo", {
+      method: "POST",
+      body: JSON.stringify({
+        formData,
+        refrence: "contact-us",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      setFormSubmittionMsg("Form submitted Succesfully");
+    } else {
+      setFormSubmittionMsg(
+        "Error submition form, please try again after sometime"
+      );
+    }
+    setLoading(false);
+  }
   useEffect(() => {
     setScreenWidth(window.innerWidth);
   });
@@ -76,6 +105,10 @@ function ContactUs() {
                 Name
               </label>
               <input
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                value={formData.name}
                 type="text"
                 id="name"
                 placeholder="Your Name"
@@ -87,6 +120,10 @@ function ContactUs() {
                 Contact Number
               </label>
               <input
+                onChange={(e) =>
+                  setFormData({ ...formData, number: e.target.value })
+                }
+                value={formData.number}
                 type="text"
                 id="number"
                 placeholder="000000000"
@@ -99,6 +136,10 @@ function ContactUs() {
               Message
             </label>
             <textarea
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
+              value={formData.message}
               id="message"
               placeholder={`To Get Best QUOTES, Describe Your Requirements in Detail:
 - What Are You Looking For
@@ -108,8 +149,19 @@ function ContactUs() {
               className="border py-2 px-4 placeholder:text-gray-300 focus:outline-none rounded-lg w-full"
             />
           </div>
-          <div className=" w-full sm:w-fit px-10 py-3 bg-green-700 text-center self-end cursor-pointer hover:scale-105 duration-200 text-white rounded-3xl">
-            Send Message
+          <div className=" flex justify-between flex-col md:flex-row gap-4 items-center">
+            <p className=" text-gray-800">{formSubmittionMsg}</p>
+            <button
+              disabled={loading}
+              onClick={handleFormSubmittion}
+              className=" w-full sm:w-fit px-10 py-3 bg-green-700 text-center self-end cursor-pointer hover:scale-105 duration-200 text-white rounded-3xl"
+            >
+              {loading ? (
+                <LoaderCircle className=" animate-spin" />
+              ) : (
+                <p> Send Message</p>
+              )}
+            </button>
           </div>
         </div>
       </div>

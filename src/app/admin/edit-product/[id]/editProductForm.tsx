@@ -1,115 +1,41 @@
 "use client";
-import { AdminNavBar } from "@/components/layout";
 import { CATEGORY_DATA } from "@/const";
 import { cn } from "@/utils/cn";
-import { desc, form } from "framer-motion/client";
+import { IProduct } from "@/utils/interface";
 import { CircleX, LoaderCircle, Plus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 
-const Page = () => {
-  return (
-    <div className=" px-4 w-full pb-24 max-w-4xl mx-auto flex flex-col gap-6 mt-8">
-      <AdminNavBar />
-      <NewProductForm />
-    </div>
+function EditProductForm(params: any) {
+  const productData = JSON.parse(params.productData);
+  const [productHeadlines, setProductHeadlines] = useState<any>(
+    productData.description || []
   );
-};
-
-export default Page;
-
-function NewProductForm() {
-  const [images, setImages] = useState<any>([]);
-  const [imageAddedToBucket, setImageAddedToBucket] = useState(false);
-  const [productHeadlines, setProductHeadlines] = useState<any>([]);
   const [newHeadline, setNewHeadline] = useState("");
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const [headlineAdded, setHeadlineAdded] = useState(false);
-  interface IProduct {
-    name: string;
-    moq: string;
-    material: string;
-    color: string;
-    filling: string;
-    pattern: string;
-    brand: string;
-    washCare: string;
-    category: string;
-    origin: string;
-    description: string[];
-    productionCapacity: string;
-    deliveryTime: string;
-    images: string[];
-  }
 
   const [formData, setFormData] = useState<IProduct>({
-    name: "",
-    moq: "",
-    material: "",
-    color: "",
-    filling: "",
-    pattern: "",
-    brand: "",
-    washCare: "",
-    category: "",
-    origin: "",
-    description: [],
-    productionCapacity: "",
-    deliveryTime: "",
-    images: [],
+    name: productData.name || "",
+    moq: productData.moq || "",
+    material: productData.material || "",
+    color: productData.color || "",
+    filling: productData.filling || "",
+    pattern: productData.pattern || "",
+    brand: productData.brand || "",
+    washCare: productData.washCare || "",
+    category: productData.category || "",
+    origin: productData.origin || "",
+    description: productData.description || [],
+    productionCapacity: productData.productionCapacity || "",
+    deliveryTime: productData.deliveryTime || "",
   });
 
   function handelChange(e: any) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-
-  function addImage(event: any) {
-    setImages([...images, ...event.target.files]);
-  }
-
-  async function handleImageUploadToS3() {
-    setLoading(true);
-    let imageLinks: any = [];
-    function getImageName(url: string) {
-      const parts = url.split("/");
-      const lastPart = parts[parts.length - 1];
-      const imageName = lastPart.split("?")[0];
-      return `https://s3.ap-south-1.amazonaws.com/cozzy.corner/filltex/${imageName}`;
-    }
-
-    const response = await fetch("/api/getImageUploadUrl", {
-      method: "POST",
-      body: JSON.stringify({
-        count: images.length,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-
-      for (let i = 0; i < images.length; i++) {
-        const responst = await fetch(data[i], {
-          method: "PUT",
-          body: images[i],
-          headers: {
-            "Content-Type": "image/jpeg",
-          },
-        });
-        const imageS3Link = getImageName(data[i]);
-        imageLinks.push(imageS3Link);
-      }
-    } else {
-      console.error("Error submitting form:", response.statusText);
-    }
-    setFormData({ ...formData, images: imageLinks });
-    setImageAddedToBucket(true);
-    setLoading(false);
   }
 
   const handleAddHeadline = () => {
@@ -135,61 +61,26 @@ function NewProductForm() {
   async function handleFormSubmit(e: any) {
     e.preventDefault();
     setLoading(true);
-    if (formData.images.length != 0) {
-      const response = await fetch("/api/addnewProductToDatabase", {
-        body: JSON.stringify({
-          formData,
-        }),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.status === 200) {
-        router.push("/admin");
-      } else {
-        console.error("Error submitting form:", response.statusText);
-      }
+    const response = await fetch("/api/editExistingProduct", {
+      body: JSON.stringify({
+        formData,
+        id: productData._id,
+      }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.status === 200) {
+      router.push("/admin");
+    } else {
+      console.error("Error submitting form:", response.statusText);
     }
     setLoading(false);
   }
 
   return (
     <form className=" w-full flex-col flex gap-4">
-      <div className=" flex gap-4 items-center">
-        {images.map((image: any, index: number) => (
-          <div key={index} className=" relative h-24 w-24">
-            <img
-              src={URL.createObjectURL(image)}
-              alt="image"
-              className=" h-24 w-24 object-cover rounded-lg"
-            />
-            <X
-              onClick={() => setImages(images.filter((i: any) => i !== image))}
-              size={20}
-              className=" absolute rounded-full p-0.5 cursor-pointer -top-2 bg-black right-0"
-              color="#fff"
-            />
-          </div>
-        ))}
-        <label className="h-16 w-16 cursor-pointer border-2 border-dashed flex items-center justify-center rounded-lg">
-          <input type="file" onChange={(e) => addImage(e)} className="hidden" />
-          <Plus size={20} />
-        </label>
-      </div>
-      <div
-        onClick={handleImageUploadToS3}
-        className={cn(
-          " py-1 px-2 bg-gray-100 rounded w-32 text-center cursor-pointer",
-          imageAddedToBucket && "bg-green-200"
-        )}
-      >
-        {loading ? (
-          <LoaderCircle className=" animate-spin" />
-        ) : (
-          <p> Add images</p>
-        )}
-      </div>
       <div className="space-y-4 max-w-md w-full">
         <div className="">
           <p className="text-gray-600">Name</p>
@@ -379,8 +270,14 @@ function NewProductForm() {
         disabled={loading}
         onClick={(e) => handleFormSubmit(e)}
       >
-        {loading ? <LoaderCircle className=" animate-spin" /> : <p>Submit</p>}
+        {loading ? (
+          <LoaderCircle className=" animate-spin" />
+        ) : (
+          <p>Edit Response</p>
+        )}
       </button>
     </form>
   );
 }
+
+export default EditProductForm;

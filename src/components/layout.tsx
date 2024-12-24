@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
+import { CATEGORY_DATA } from "@/const";
 
 export function NavBar({ routeURL }: { routeURL?: string }) {
   const [showMobileNavbar, setShowMobileNavbar] = useState(false);
@@ -66,7 +67,11 @@ export function NavBar({ routeURL }: { routeURL?: string }) {
             alt="company_logo"
           />
         </Link>
-        <Menu onClick={() => setShowMobileNavbar(true)} color="white" />
+
+        <Menu
+          onClick={() => setShowMobileNavbar(true)}
+          color={`${routeURL === "/" ? "white" : "black"}`}
+        />
 
         {showMobileNavbar && (
           <motion.div
@@ -176,7 +181,7 @@ export function Footer({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        " border-t md:px-12 py-8 pb-4 mt-4 flex gap-6 md:gap-2 flex-col",
+        " border-t px-4 py-8 pb-4 max-w-7xl mx-auto mt-4 flex gap-6 md:gap-2 flex-col",
         className
       )}
     >
@@ -200,7 +205,9 @@ export function Footer({ className }: { className?: string }) {
           <div className=" flex  flex-col gap-4 md:gap-6">
             <p className="font-medium text-lg">Company</p>
             <div className=" flex flex-col gap-4">
-              <p className=" text-gray-700">About Us</p>
+              <Link href={"/about-us"} className=" text-gray-700">
+                About Us
+              </Link>
               <Link href={"/contact-us"} className=" text-gray-700">
                 Contact Us
               </Link>
@@ -211,16 +218,16 @@ export function Footer({ className }: { className?: string }) {
               Our products
             </Link>
             <div className=" flex flex-col gap-4">
-              <p className=" text-gray-700">All types of quilt</p>
-              <p className=" text-gray-700">Pillows and fillers</p>
-              <p className=" text-gray-700">Non Woven Polyester Roll</p>
-              <p className=" text-gray-700">Non Woven Geo textiles Fabric</p>
-              <p className=" text-gray-700">
-                Bleach & Unbleached Cotton Bating
-              </p>
-              <p className=" text-gray-700">
-                Non woven polyester acoustic sheet
-              </p>
+              {CATEGORY_DATA.map((data) => {
+                return (
+                  <Link
+                    href={`/category/${data.slug}`}
+                    className="capitalize text-gray-700"
+                  >
+                    {data.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
           <div className=" flex flex-col gap-4 md:gap-6">

@@ -14,10 +14,8 @@ const contactUsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: false,
+    refrence: {
+      type: String,
     },
   },
   {

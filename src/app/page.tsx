@@ -6,6 +6,7 @@ import { ArrowRight, Download, DownloadIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function Home({ params }: any) {
   //   const headersList = headers();
@@ -27,38 +28,52 @@ export default function Home({ params }: any) {
 
 function HeroSection({ routeURL }: any) {
   return (
-    <div className=" overflow-hidden pb-8 relative p-4 w-full max-w-[102rem] flex flex-col mx-auto h-screen">
+    <div className="">
       <img
         src="./hero.jpg"
         loading="lazy"
         className=" -z-10 absolute top-0 left-0 h-full w-full object-cover "
         alt=""
       />
-      <NavBar routeURL={routeURL} />
 
-      <div className=" max-w-5xl w-full px-4 h-full  justify-center  items-center mx-auto flex flex-col z-20 gap-8">
-        <div className=" py-2 px-5 rounded-3xl text-white relative overflow-hidden  ">
-          <p className=" text-center text-white text-xl font-medium">
-            Start Your Experience with the Leaders in Textile Excellence
+      <div className=" overflow-hidden pb-8 relative p-4 w-full max-w-7xl flex flex-col mx-auto h-[92vh] md:h-screen">
+        <NavBar routeURL={routeURL} />
+
+        <div className=" max-w-5xl w-full px-4 h-full  justify-center  items-center mx-auto flex flex-col z-20 gap-8">
+          <div className=" py-2 px-5 rounded-3xl text-white relative overflow-hidden  ">
+            <p className=" text-center text-white text-xl font-medium">
+              Start Your Experience with the Leaders in Textile Excellence
+            </p>
+            <div className=" w-full h-full border absolute top-0 left-0 blur-3xl bg-gray-400 -z-10 opacity-80"></div>
+          </div>
+
+          <div className=" text-center text-4xl md:text-6xl text-white">
+            Redefining{" "}
+            <span className=" font-playfair italic">Comfort and Quality</span>{" "}
+            with Expertly Crafted{" "}
+            <span className=" font-playfair italic">Textile Solutions</span>
+          </div>
+        </div>
+        <div className="  flex flex-col md:flex-row max-w-7xl mx-auto w-full gap-6 justify-between items-center">
+          <p className="  text-white max-w-md">
+            Unlock the World of Premium Textiles, Innovative Solutions, and
+            Unmatched Quality with Us
           </p>
-          <div className=" w-full h-full border absolute top-0 left-0 blur-3xl bg-white opacity-60"></div>
-        </div>
-
-        <div className=" text-center text-4xl md:text-6xl text-white">
-          Redefining{" "}
-          <span className=" font-playfair italic">Comfort and Quality</span>{" "}
-          with Expertly Crafted{" "}
-          <span className=" font-playfair italic">Textile Solutions</span>
-        </div>
-      </div>
-      <div className="  flex flex-col md:flex-row max-w-7xl mx-auto w-full gap-6 justify-between items-center">
-        <p className="  text-white max-w-md">
-          Unlock the World of Premium Textiles, Innovative Solutions, and
-          Unmatched Quality with Us
-        </p>
-        <div className=" px-4 py-2 hover:gap-4 duration-200 cursor-pointer rounded-3xl flex items-center gap-2 shrink-0 justify-center border border-white text-white ">
-          View Products
-          <ArrowRight color="#fff" />
+          <div
+            onClick={() =>
+              document.querySelector("#products")?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              })
+            }
+            className="  group px-4 py-2 hover:gap-3 duration-200 cursor-pointer rounded-3xl flex items-center gap-2 shrink-0 justify-center border border-white text-white "
+          >
+            View Products
+            <ArrowRight
+              className=" group-hover:rotate-90 duration-200"
+              color="#fff"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -67,7 +82,7 @@ function HeroSection({ routeURL }: any) {
 
 function QuoteSection() {
   return (
-    <div className=" px-4 border-y py-12 w-full">
+    <div className=" px-4 border-b  mt-6 md:mt-8 py-6 md:py-12 w-full">
       <p className="text-xl md:text-2xl px-12 mx-auto text-center font-playfair max-w-xl relative second">
         The service was amazing. I never had to wait that long for my food.
       </p>
@@ -77,7 +92,7 @@ function QuoteSection() {
 
 function AboutUs() {
   return (
-    <div className=" w-full my-12 flex-col md:flex-row px-4 max-w-7xl mx-auto flex gap-12 justify-between">
+    <div className=" w-full mt-6 md:mt-8 py-6 md:py-12 flex-col md:flex-row px-4 max-w-7xl mx-auto flex gap-12 justify-between">
       <div className=" w-full flex justify-between flex-col gap-6">
         <p className=" text-3xl font-semibold">About Us</p>
         <div className=" flex flex-col gap-3">
@@ -129,7 +144,7 @@ function AboutUs() {
 
 function ExploreMore() {
   return (
-    <div className=" w flex-full max-w-7xl flex flex-col px-4 mx-auto gap-12">
+    <div className=" w flex-full  mt-6 md:mt-8 py-6 md:py-12 max-w-7xl flex flex-col px-4 mx-auto gap-12">
       <ExploreMoreHeading />
       <ExploreMoreCards />
     </div>
@@ -138,7 +153,10 @@ function ExploreMore() {
 
 function ExploreMoreHeading() {
   return (
-    <div className=" flex flex-col md:flex-row justify-between gap-6 items-center ">
+    <div
+      id="products"
+      className=" flex flex-col md:flex-row justify-between gap-6 items-center "
+    >
       <div className=" text-2xl font-semibold ">
         Explore Our{" "}
         <span className=" text-green-600  font-playfair italic">
@@ -158,25 +176,40 @@ function ExploreMoreHeading() {
 function ExploreMoreCards() {
   return (
     <div className=" w-full grid max-h-[38rem] gap-3 grid-cols-3 grid-rows-6">
-      <ExploreCard img="./Quilt.png" className="row-span-4"></ExploreCard>
       <ExploreCard
+        categoryName={CATEGORY_DATA[0].name}
+        link={CATEGORY_DATA[0].slug}
+        img="./Quilt.png"
+        className="row-span-4"
+      ></ExploreCard>
+      <ExploreCard
+        categoryName={CATEGORY_DATA[1].name}
+        link={CATEGORY_DATA[1].slug}
         img="./non-polyester.png"
         className="row-span-3"
       ></ExploreCard>
       <ExploreCard
+        categoryName={CATEGORY_DATA[2].name}
+        link={CATEGORY_DATA[2].slug}
         img="./Cotton-BAting.png"
         className="row-span-2"
       ></ExploreCard>
 
       <ExploreCard
+        categoryName={CATEGORY_DATA[3].name}
+        link={CATEGORY_DATA[3].slug}
         img="./Polyester-Acoustic.png"
         className="row-span-4"
       ></ExploreCard>
       <ExploreCard
+        categoryName={CATEGORY_DATA[4].name}
+        link={CATEGORY_DATA[4].slug}
         img="./Non-Woven-Geo-Textile.png"
         className="row-span-3"
       ></ExploreCard>
       <ExploreCard
+        categoryName={CATEGORY_DATA[5].name}
+        link={CATEGORY_DATA[5].slug}
         img="./Pillows-and-Fillers.png"
         className="row-span-2"
       ></ExploreCard>
@@ -184,10 +217,21 @@ function ExploreMoreCards() {
   );
 }
 
-function ExploreCard({ className, img }: { img: string; className?: string }) {
+function ExploreCard({
+  className,
+  categoryName,
+  link,
+  img,
+}: {
+  categoryName: string;
+  link: string;
+  img: string;
+  className?: string;
+}) {
   const [showDetail, setShowDetail] = useState(false);
   return (
-    <div
+    <Link
+      href={`/category/${link}`}
       onMouseEnter={() => setShowDetail(true)}
       onMouseLeave={() => setShowDetail(false)}
       className={cn(
@@ -202,21 +246,21 @@ function ExploreCard({ className, img }: { img: string; className?: string }) {
             initial={{ y: "100%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className=" block  w-full h-full absolute text-white top-0 left-0 z-10 p-4 bg-black bg-opacity-60"
+            className=" block capitalize font-medium text-3xl font-playfair italic  w-full h-full absolute text-white top-0 left-0 z-10 p-4 bg-black bg-opacity-60"
           >
-            asdfa
+            {categoryName}
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Link>
   );
 }
 //  Animate presence is not completed
 
 function DiscoverMore() {
   return (
-    <div className=" w-full max-w-7xl mx-auto flex justify-center flex-col px-4 my-12 gap-8">
-      <div className=" flex gap-8 flex-col md:flex-row items-end justify-center">
+    <div className=" w-full max-w-7xl mx-auto flex justify-center flex-col px-4  mt-6 md:mt-8 py-6 md:py-12 gap-6 md:gap-8">
+      <div className=" flex gap-4 md:gap-8 flex-col md:flex-row items-end justify-center">
         <div className="md:flex flex-col gap-2 items-end">
           <span className="  text-4xl">Discover the Essence of</span>
           <span className=" font-playfair ml-2 md:ml-0 text-5xl text-green-600 italic capitalize font-semibold">
@@ -237,7 +281,7 @@ function DiscoverMore() {
 function ScrollPictureAnimation() {
   return (
     <div className="relative flex gap-4 overflow-x-hidden">
-      <div className="py-12 animate-marquee3 flex gap-4 whitespace-nowrap">
+      <div className="py-8 animate-marquee3 flex gap-4 whitespace-nowrap">
         <ScrollPictureAnimationImage img="https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/wedding/IMG_5797-min.jpg" />
         <ScrollPictureAnimationImage img="https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/wedding/IMG_6576-min.jpg" />
         <ScrollPictureAnimationImage img="https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/wedding/IMG_6656-min.jpg" />
@@ -246,7 +290,7 @@ function ScrollPictureAnimation() {
         <ScrollPictureAnimationImage img="https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/wedding/IMG_6656-min.jpg" />
       </div>
 
-      <div className=" mx-3 absolute top-0 py-12 flex gap-4 animate-marquee4 whitespace-nowrap">
+      <div className=" mx-3 absolute top-0 py-8 flex gap-4 animate-marquee4 whitespace-nowrap">
         <ScrollPictureAnimationImage img="https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/wedding/IMG_5797-min.jpg" />
         <ScrollPictureAnimationImage img="https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/wedding/IMG_6576-min.jpg" />
         <ScrollPictureAnimationImage img="https://s3.ap-south-1.amazonaws.com/chal.chitrakaar/wedding/IMG_6656-min.jpg" />

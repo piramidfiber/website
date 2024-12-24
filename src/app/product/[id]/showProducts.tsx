@@ -1,76 +1,29 @@
 "use client";
-import { Footer, NavBar } from "@/components/layout";
 import { ChevronRight, Dot, Star, StarHalf } from "lucide-react";
-import React, { useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
 
-const Page = () => {
-  return (
-    <div className=" px-4 py-4 flex-col max-w-7xl flex w-full mx-auto  ">
-      <NavBar />
-      <ShowProduct key={0} productDetails={productDetails[0]} />
-      <Footer />
-    </div>
-  );
-};
-
-export default Page;
-
-type Product = {
-  name: string;
-  "minimum-order-quantity": string;
-  material: string;
-  color: string;
-  filling: string;
-  pattern: string;
-  brand: string;
-  "wash-care": string;
-  "country-of-origin": string;
-  description: string[];
-  "production-capacity": string;
-  "delivery-time": string;
-  images: string[];
-};
-
-const productDetails: Product[] = [
-  {
-    name: "Bed Matress Protextor",
-    "minimum-order-quantity": "15",
-    material: "Cotton",
-    color: "Black",
-    filling: "Cotton",
-    pattern: "plain",
-    brand: "Filltex",
-    "wash-care": "Machine Washable",
-    "country-of-origin": "India",
-    description: [
-      "Three layered quilted mattress protector. exterior is made of 100% cotton with 150 gsm poly fill inside and non woven on the rear is meant to be used on top of a mattress.this is not a mattress",
-      "Three layered quilted mattress protector. exterior is made of 100% cotton with 150 gsm poly fill inside and non woven on the rear is meant to be used on top of a mattress.this is not a mattress",
-      "Provides additional cushioning for your mattress and protects your mattress from dust,mites,odor,body sweat,fluids",
-    ],
-    "production-capacity": "10",
-    "delivery-time": "7-10",
-    images: [
-      "https://filltex.s3.ap-south-1.amazonaws.com/product-image.png",
-      "https://filltex.s3.ap-south-1.amazonaws.com/category-image.png",
-    ],
-  },
-];
-
-function ShowProduct({ productDetails }: { productDetails: Product }) {
+export function ShowProduct(params: any) {
+  const productDetails = JSON.parse(params.productDetails);
   const [selectedImage, setSelectedImage] = useState<any>(
-    productDetails.images[0]
+    productDetails?.images[0]
   );
   return (
     <div className=" flex flex-col gap-4 w-full h-full">
-      {/* <div className="">{`Home > Bed Protector and Mattress Covers > ${productDetails.name}`}</div> */}
       <div className=" flex gap-1 flex-wrap items-center py-4 md:px-4">
-        <p className=" cursor-pointer hover:underline text-gray-600 underline-offset-2">
+        <Link
+          href={"/category"}
+          className=" cursor-pointer hover:underline text-gray-600 underline-offset-2"
+        >
           Home
-        </p>
+        </Link>
         <ChevronRight size={20} stroke="#333" />
-        <p className=" cursor-pointer hover:underline text-gray-600 underline-offset-2">
-          Bed Protector and Mattress Covers
-        </p>
+        <Link
+          href={`/category/${productDetails?.category?.slug}`}
+          className=" cursor-pointer hover:underline text-gray-600 underline-offset-2"
+        >
+          {productDetails?.category?.name}
+        </Link>
         <ChevronRight size={20} stroke="#333" />
         <p className=" cursor-pointer hover:underline text-gray-600 underline-offset-2">
           {productDetails.name}
@@ -160,27 +113,25 @@ function ShowProduct({ productDetails }: { productDetails: Product }) {
 
               <div className="w-full grid gap-2 md:grid-cols-3 grid-cols-2">
                 <p className="text-gray-900">Wash Care:</p>
-                <p className="text-gray-900">{productDetails["wash-care"]}</p>
+                <p className="text-gray-900">{productDetails["washCare"]}</p>
               </div>
 
               <div className="w-full grid gap-2 md:grid-cols-3 grid-cols-2">
                 <p className="text-gray-900">Country of Origin:</p>
-                <p className="text-gray-900">
-                  {productDetails["country-of-origin"]}
-                </p>
+                <p className="text-gray-900">{productDetails["origin"]}</p>
               </div>
 
               <div className="w-full grid gap-2 md:grid-cols-3 grid-cols-2">
                 <p className="text-gray-900">Production Capacity:</p>
                 <p className="text-gray-900">
-                  {productDetails["production-capacity"]}
+                  {productDetails["productionCapacity"]}
                 </p>
               </div>
 
               <div className="w-full grid gap-2 md:grid-cols-3 grid-cols-2">
                 <p className="text-gray-900">Delivery Time:</p>
                 <p className="text-gray-900">
-                  {productDetails["delivery-time"]}
+                  {productDetails["deliveryTime"]}
                 </p>
               </div>
             </div>
@@ -211,12 +162,12 @@ function ShowProduct({ productDetails }: { productDetails: Product }) {
                 <Dot strokeWidth={2} className="shrink-0 " size={20} />
 
                 <p>Production Capacity:</p>
-                <p>{productDetails["production-capacity"]} Pcs</p>
+                <p>{productDetails["productionCapacity"]} Pcs</p>
               </div>
               <div className="flex items-center gap-2">
                 <Dot strokeWidth={2} className="shrink-0 " size={20} />
                 <p>Production Capacity:</p>
-                <p>{productDetails["delivery-time"]} Days</p>
+                <p>{productDetails["deliveryTime"]} Days</p>
               </div>
             </div>
           </div>

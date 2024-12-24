@@ -1,19 +1,25 @@
 import { Footer, NavBar } from "@/components/layout";
-import { CATEGORY_DATA, CategoryDataTpye } from "@/const";
+import { CATEGORY_DATA, CategoryDataType } from "@/const";
+import Category from "@/models/category";
+import connect from "@/utils/dbConfig";
 import Link from "next/link";
 import React from "react";
 
-const Page = ({ params }: any) => {
+const Page = async ({ params }: any) => {
   const id = params.id;
-  const categoryData: IcategoryData | undefined = CATEGORY_DATA.find(
-    (item) => item.slug === id
+  connect();
+  const [categoryData]: any = await Category.find({ slug: id }).populate(
+    "products"
   );
+  console.log(categoryData);
   return (
-    <div>
+    <div className=" p-4 max-w-7xl mx-auto">
       <NavBar />
       <CategoryBar categoryData={CATEGORY_DATA} currentCategory={id} />
       {categoryData && <HeroSection categoryData={categoryData} />}
-      {categoryData && <ShowProducts />}
+      {categoryData?.products?.length > 0 && (
+        <ShowProducts productsData={categoryData.products} />
+      )}
       <Footer />
     </div>
   );
@@ -30,7 +36,7 @@ export default Page;
 
 function CategoryBar({ categoryData, currentCategory }: any) {
   return (
-    <div className="md:px-16 px-4 w-full sticky top-0 bg-white ">
+    <div className=" px-4 md:px-0 w-full mx-auto max-w-7xl sticky top-0 bg-white ">
       <div className=" flex gap-8 overflow-x-scroll py-4 scrollbar-custom">
         <p className="font-thin text-gray-700 whitespace-nowrap">Jump to:</p>
         <div className="flex gap-10">
@@ -77,11 +83,16 @@ function HeroSection({ categoryData }: { categoryData: IcategoryData }) {
   );
 }
 
-function ShowProducts() {
+function ShowProducts({ productsData }: any) {
+  console.log(productsData);
   return (
     <div className=" mx-auto max-w-7xl flex flex-col gap-6 w-full px-4">
       <HeadingDiverseRangofProduct />
       <div className=" grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+        {productsData.map((data: any, idx: number) => {
+          return <ProductCard productData={data} key={idx} />;
+        })}
+        {/* <ProductCard />
         <ProductCard />
         <ProductCard />
         <ProductCard />
@@ -89,9 +100,7 @@ function ShowProducts() {
         <ProductCard />
         <ProductCard />
         <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        <ProductCard /> */}
       </div>
     </div>
   );
@@ -109,22 +118,21 @@ function HeadingDiverseRangofProduct() {
   );
 }
 
-function ProductCard() {
+function ProductCard({ productData }: any) {
   return (
-    <Link href="/product" className=" group w-full h-full">
+    <Link href={`/product/${productData._id}`} className=" group w-full h-full">
       <div className=" rounded overflow-hidden w-full h-48">
         <img
-          src="https://filltex.s3.ap-south-1.amazonaws.com/category-image.png"
+          src={productData.images[0]}
           className=" w-full h-full object-cover"
           alt=""
         />
       </div>
       <p className=" mt-2 group-hover:underline text-lg font-semibold">
-        Product Name
+        {productData.name}
       </p>
       <p className=" line-clamp-1 text-gray-600">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam,
-        perferendis.
+        {productData.description[0]}
       </p>
     </Link>
   );

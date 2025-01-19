@@ -38,7 +38,7 @@ const AdminLogin = () => {
               htmlFor="hash"
               className="block text-sm font-medium text-gray-700"
             >
-              Hash
+              Password
             </label>
             <input
               type="text"

@@ -74,7 +74,7 @@ function HeroSection({ categoryData }: { categoryData: IcategoryData }) {
         />
       </div>
       <div className=" h-full w-full bg-gray-100 rounded p-6 items-center justify-center gap-4 flex flex-col   ">
-        <p className=" text-3xl font-semibold font-playfair">
+        <p className=" text-3xl capitalize font-semibold font-playfair">
           {categoryData.name}
         </p>
         <p className=" max-w-xl mx-auto text-center text-gray-600">

@@ -4,6 +4,8 @@ import connect from "@/utils/dbConfig";
 import Product from "@/models/product";
 import ShowProductsComponent from "./categoryData";
 
+export const revalidate = 0;
+
 const Page = async () => {
   await connect();
   Product.find({});

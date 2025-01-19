@@ -181,7 +181,7 @@ function ExploreMoreHeading() {
 
 function ExploreMoreCards() {
   return (
-    <div className=" w-full grid max-h-[38rem] gap-3 grid-cols-3 grid-rows-6">
+    <div className=" w-full grid max-h-[42rem] gap-3 grid-cols-3 grid-rows-6">
       <ExploreCard
         categoryName={CATEGORY_DATA[0].name}
         link={CATEGORY_DATA[0].slug}

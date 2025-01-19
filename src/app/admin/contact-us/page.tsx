@@ -4,6 +4,7 @@ import connect from "@/utils/dbConfig";
 import React from "react";
 import ContactInfoCard from "./contactInfoCard";
 
+export const revalidate = 0;
 const Page = async () => {
   connect();
   const contactData = await ContactUs.find({});

@@ -4,9 +4,10 @@ import { CATEGORY_DATA } from "@/const";
 import { cn } from "@/utils/cn";
 import { ArrowRight, Download, DownloadIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { set } from "mongoose";
 
 export default function Home({ params }: any) {
   //   const headersList = headers();
@@ -28,11 +29,11 @@ export default function Home({ params }: any) {
 
 function HeroSection({ routeURL }: any) {
   return (
-    <div className="">
+    <div className=" border">
       <img
         src="./hero.jpg"
         loading="lazy"
-        className=" -z-10 absolute top-0 left-0 h-full w-full object-cover "
+        className=" -z-10 absolute top-0 h-[92vh] md:h-screen left-0  w-full object-cover "
         alt=""
       />
 
@@ -181,43 +182,43 @@ function ExploreMoreHeading() {
 
 function ExploreMoreCards() {
   return (
-    <div className=" w-full grid max-h-[42rem] gap-3 grid-cols-3 grid-rows-6">
+    <div className=" w-full grid max-h-[42rem] gap-3 grid-cols-2 md:grid-cols-3 grid-rows-4 md:grid-rows-6">
       <ExploreCard
         categoryName={CATEGORY_DATA[0].name}
         link={CATEGORY_DATA[0].slug}
         img="./Quilt.png"
-        className="row-span-4"
+        className="col-span-2 md:col-span-1 row-span-1 md:row-span-4"
       ></ExploreCard>
       <ExploreCard
         categoryName={CATEGORY_DATA[1].name}
         link={CATEGORY_DATA[1].slug}
         img="./non-polyester.png"
-        className="row-span-3"
+        className="row-span-1 md:row-span-3"
       ></ExploreCard>
       <ExploreCard
         categoryName={CATEGORY_DATA[2].name}
         link={CATEGORY_DATA[2].slug}
         img="./Cotton-BAting.png"
-        className="row-span-2"
+        className="row-span-1 md:row-span-2"
       ></ExploreCard>
 
       <ExploreCard
         categoryName={CATEGORY_DATA[3].name}
         link={CATEGORY_DATA[3].slug}
         img="./Polyester-Acoustic.png"
-        className="row-span-4"
+        className="row-span-1 md:row-span-4"
       ></ExploreCard>
       <ExploreCard
         categoryName={CATEGORY_DATA[4].name}
         link={CATEGORY_DATA[4].slug}
         img="./Non-Woven-Geo-Textile.png"
-        className="row-span-3"
+        className="row-span-1 md:row-span-3"
       ></ExploreCard>
       <ExploreCard
         categoryName={CATEGORY_DATA[5].name}
         link={CATEGORY_DATA[5].slug}
         img="./Pillows-and-Fillers.png"
-        className="row-span-2"
+        className="col-span-2 row-span-1 md:row-span-2"
       ></ExploreCard>
     </div>
   );
@@ -235,6 +236,14 @@ function ExploreCard({
   className?: string;
 }) {
   const [showDetail, setShowDetail] = useState(false);
+
+  useEffect(() => {
+    // determine window size
+    const width = window.innerWidth;
+    if (width < 768) {
+      setShowDetail(true);
+    }
+  }, []);
   return (
     <Link
       href={`/category/${link}`}
@@ -252,7 +261,7 @@ function ExploreCard({
             initial={{ y: "100%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className=" block capitalize  text-2xl  w-full h-full absolute text-white top-0 left-0 z-10 p-4 bg-gradient-to-b from-transparent to-black bg-opacity-60"
+            className=" block capitalize text-lg md:text-2xl  w-full h-full absolute text-white top-0 left-0 z-10 p-4 bg-gradient-to-b from-transparent to-black bg-opacity-60"
           >
             <p className=" flex items-end w-full h-full ">{categoryName}</p>
           </motion.div>

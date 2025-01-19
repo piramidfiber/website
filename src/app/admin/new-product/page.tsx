@@ -203,7 +203,7 @@ function NewProductForm() {
           />
         </div>
         <div className="">
-          <p className="text-gray-600">MOQ</p>
+          <p className="text-gray-600">MOQ(Minimum order Quantity)</p>
           <input
             name="moq"
             onChange={handelChange}

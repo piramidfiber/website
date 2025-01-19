@@ -1,33 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Apply styles for screens with a minimum width of 768px */
 @media screen and (min-width: 768px) {
-  .scrollbar-custom {
-    /* Ensures scrollbar is shown but styled */
-    scrollbar-width: thin; /* Firefox */
-    scrollbar-color: #158036 #e0e0e0; /* Green scrollbar on a light gray background */
+  .sidebar::-webkit-scrollbar {
+    height: 8px;
   }
-
-  .scrollbar-custom::-webkit-scrollbar {
-    width: 8px; /* Adjust scrollbar width */
-    height: 8px; /* For horizontal scrollbar */
+  .sidebar::-webkit-scrollbar-track {
+    background: #c5c5c530;
+    border-radius: 24px;
   }
-
-  .scrollbar-custom::-webkit-scrollbar-track {
-    background: #e0e0e0; /* Light gray background for the scrollbar track */
-    border-radius: 10px;
-  }
-
-  .scrollbar-custom::-webkit-scrollbar-thumb {
-    background-color: #158036; /* Green scrollbar thumb */
-    border-radius: 10px;
-    border: 2px solid #e0e0e0; /* Adds a border to separate the thumb from the track */
-  }
-
-  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
-    background-color: #13672e; /* Darker green on hover */
+  .sidebar::-webkit-scrollbar-thumb {
+    background-color: #017544;
+    border-radius: 24px;
   }
 
   .scrollbar-hide::-webkit-scrollbar {

@@ -48,7 +48,7 @@ export function CategoryBar({
   }, [categoryData]);
   return (
     <div className=" w-full sticky top-0 bg-white ">
-      <div className=" flex gap-8 overflow-x-scroll py-4 scrollbar-custom">
+      <div className=" flex gap-8 overflow-x-scroll py-4 sidebar">
         <p className="font-thin text-gray-700 whitespace-nowrap">Jump to:</p>
         <div className="flex gap-10">
           {categoryData.map((category: CategoryDataType) => {

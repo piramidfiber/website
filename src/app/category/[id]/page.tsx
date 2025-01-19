@@ -1,6 +1,7 @@
 import { Footer, NavBar } from "@/components/layout";
 import { CATEGORY_DATA, CategoryDataType } from "@/const";
 import Category from "@/models/category";
+import Product from "@/models/product";
 import connect from "@/utils/dbConfig";
 import Link from "next/link";
 import React from "react";
@@ -8,6 +9,7 @@ import React from "react";
 const Page = async ({ params }: any) => {
   const id = params.id;
   connect();
+  const data = await Product.find({});
   const [categoryData]: any = await Category.find({ slug: id }).populate(
     "products"
   );
@@ -37,7 +39,7 @@ export default Page;
 function CategoryBar({ categoryData, currentCategory }: any) {
   return (
     <div className=" px-4 md:px-0 w-full mx-auto max-w-7xl sticky top-0 bg-white ">
-      <div className=" flex gap-8 overflow-x-scroll py-4 scrollbar-custom">
+      <div className=" flex gap-8 overflow-x-scroll py-4 sidebar">
         <p className="font-thin text-gray-700 whitespace-nowrap">Jump to:</p>
         <div className="flex gap-10">
           {categoryData.map((category: any) => {
@@ -109,11 +111,11 @@ function ShowProducts({ productsData }: any) {
 function HeadingDiverseRangofProduct() {
   return (
     <div className=" w-full flex gap-4 items-center">
-      <div className=" h-0.5 w-full bg-green-600"></div>
-      <div className=" capitalize text-green-600 text-3xl whitespace-nowrap text-center font-playfair font-medium">
+      <div className=" h-0.5 w-full bg-green-800"></div>
+      <div className=" capitalize text-green-800 text-3xl whitespace-nowrap text-center font-playfair font-medium">
         Our Diverse range of products
       </div>
-      <div className=" h-0.5 w-full bg-green-600"></div>
+      <div className=" h-0.5 w-full bg-green-800"></div>
     </div>
   );
 }
@@ -128,7 +130,7 @@ function ProductCard({ productData }: any) {
           alt=""
         />
       </div>
-      <p className=" mt-2 group-hover:underline text-lg font-semibold">
+      <p className=" mt-2 capitalize group-hover:underline text-lg font-semibold">
         {productData.name}
       </p>
       <p className=" line-clamp-1 text-gray-600">

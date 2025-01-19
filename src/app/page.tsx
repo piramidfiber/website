@@ -163,12 +163,18 @@ function ExploreMoreHeading() {
           specialty textiles
         </span>
       </div>
-      <div className=" px-4 flex gap-3  border border-green-600 justify-center  rounded-md py-2">
+      <Link
+        href={
+          "https://filltex.s3.ap-south-1.amazonaws.com/downloard-brochure.pdf"
+        }
+        target="_blank"
+        className=" px-4 flex gap-3  border border-green-600 justify-center  rounded-md py-2"
+      >
         <div className="">
           <DownloadIcon size={20} color="#16a34a" />
         </div>
         <p className="font-semibold text-green-600">Download Our Brochure</p>
-      </div>
+      </Link>
     </div>
   );
 }
@@ -246,9 +252,9 @@ function ExploreCard({
             initial={{ y: "100%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className=" block capitalize font-medium text-3xl font-playfair italic  w-full h-full absolute text-white top-0 left-0 z-10 p-4 bg-black bg-opacity-60"
+            className=" block capitalize  text-2xl  w-full h-full absolute text-white top-0 left-0 z-10 p-4 bg-gradient-to-b from-transparent to-black bg-opacity-60"
           >
-            {categoryName}
+            <p className=" flex items-end w-full h-full ">{categoryName}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -268,9 +274,9 @@ function DiscoverMore() {
           </span>
         </div>
         <div className=" md:text-right text-gray-600">
-          Lorem ipsum dolor, sit amet consectetur.
+          Delve into a world where comfort meets
           <br />
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. A, unde.{" "}
+          Innovation with our premium fiberfill solutions
         </div>
       </div>
       <ScrollPictureAnimation />

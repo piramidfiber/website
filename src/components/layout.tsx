@@ -208,7 +208,10 @@ export function Footer({ className }: { className?: string }) {
               <Link href={"/about-us"} className=" text-gray-700">
                 About Us
               </Link>
-              <Link href={"/contact-us"} className=" text-gray-700">
+              <Link
+                href={"/contact-us"}
+                className=" whitespace-nowrap text-gray-700"
+              >
                 Contact Us
               </Link>
             </div>
